@@ -340,7 +340,7 @@ public class FilePath extends CordovaPlugin {
 
                 String fullPath = getPathFromExtSD(split);
                 if (fullPath != "") {
-                    Log.d(TAG, " aqui 2 :", fullPath);
+                    Log.d(TAG, " aqui 2 :" + fullPath);
                     return fullPath;
                 }
                 else {
@@ -377,7 +377,7 @@ public class FilePath extends CordovaPlugin {
                     try {
                         String path = getDataColumn(context, contentUri, null, null);
                         if (path != null) {
-                            Log.d(TAG, " aqui 4 :", path);
+                            Log.d(TAG, " aqui 4 :" + path);
                             return path;
                         }
                     } catch (Exception e) {
