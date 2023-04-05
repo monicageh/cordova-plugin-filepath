@@ -213,7 +213,7 @@ public class FilePath extends CordovaPlugin {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
                     null);
             Log.d(TAG, " CURSOR ");
-            Log.d(TAG, cursor);
+            Log.d(TAG, cursor.toString());
             if (cursor != null && cursor.moveToFirst()) {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
