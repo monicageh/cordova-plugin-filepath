@@ -212,6 +212,8 @@ public class FilePath extends CordovaPlugin {
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
                     null);
+            Log.d(TAG, " CURSOR ");
+            Log.d(TAG, cursor);
             if (cursor != null && cursor.moveToFirst()) {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
@@ -407,6 +409,7 @@ public class FilePath extends CordovaPlugin {
                 } else {
                     contentUri = MediaStore.Files.getContentUri("external");
                 }
+                Log.d(TAG, "MEDIA PROVIDER CONTENT URI: " + contentUri);
 
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[]{
