@@ -226,7 +226,7 @@ public class FilePath extends CordovaPlugin {
     /**
      * Get content:// from segment list
      * In the new Uri Authority of Google Photos, the last segment is not the content:// anymore
-     * So let's iterate through all segments and find the content uri!
+     * So lets iterate through all segments and find the content uri!
      *
      * @param segments The list of segment
      */
@@ -323,15 +323,15 @@ public class FilePath extends CordovaPlugin {
                 ", Host: " + uri.getHost() +
                 ", Segments: " + uri.getPathSegments().toString()
         );
-        LOG.d(' aqui 0 ');
+        LOG.d(" aqui 0 ");
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
         // DocumentProvider
-        LOG.d(' context: ' + context);
-        LOG.d(' uri: ' + uri);
+        LOG.d(" context: " + context);
+        LOG.d(" uri: " + uri);
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            LOG.d(' aqui 1 ');
+            LOG.d(" aqui 1 ");
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -340,11 +340,11 @@ public class FilePath extends CordovaPlugin {
 
                 String fullPath = getPathFromExtSD(split);
                 if (fullPath != "") {
-                    LOG.d(' aqui 2 :', fullPath);
+                    LOG.d(" aqui 2 :", fullPath);
                     return fullPath;
                 }
                 else {
-                    LOG.d(' aqui 3 ');
+                    LOG.d(" aqui 3 ");
                     return null;
                 }
             }
@@ -377,7 +377,7 @@ public class FilePath extends CordovaPlugin {
                     try {
                         String path = getDataColumn(context, contentUri, null, null);
                         if (path != null) {
-                            LOG.d(' aqui 4 :', path);
+                            LOG.d(" aqui 4 :", path);
                             return path;
                         }
                     } catch (Exception e) {
@@ -427,7 +427,7 @@ public class FilePath extends CordovaPlugin {
                     return getDriveFilePath(uri, context);
                 } else {
                     String contentPath = getContentFromSegments(uri.getPathSegments());
-                    LOG.d(' CONTENT PATH : ' + contentPath);
+                    LOG.d(" CONTENT PATH : " + contentPath);
                     if (contentPath != "") {
                         return getPath(context, Uri.parse(contentPath));
                     } else {
@@ -451,7 +451,7 @@ public class FilePath extends CordovaPlugin {
     }
 
     private static String getDriveFilePath(Uri uri, Context context) {
-        LOG.d(' aqui 5 ');
+        LOG.d(" aqui 5 ");
         Uri returnUri = uri;
         Cursor returnCursor = context.getContentResolver().query(returnUri, null, null, null, null);
         /*
