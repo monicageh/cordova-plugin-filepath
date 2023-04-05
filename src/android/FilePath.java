@@ -302,20 +302,6 @@ public class FilePath extends CordovaPlugin {
     }
 
     /**
-     * sometimes in raw type, the second part is a valid filepath
-     *
-     * @param rawPath The raw path
-     */
-    private static String getRawFilepath(String rawPath) {
-        final String[] split = rawPath.split(":");
-        if (fileExists(split[1])) {
-            return split[1];
-        }
-
-        return "";
-    }
-
-    /**
      * Get a file path from a Uri. This will get the the path for Storage Access
      * Framework Documents, as well as the _data field for the MediaStore and
      * other file-based ContentProviders.<br>
@@ -337,11 +323,15 @@ public class FilePath extends CordovaPlugin {
                 ", Host: " + uri.getHost() +
                 ", Segments: " + uri.getPathSegments().toString()
         );
+        LOG.d(' aqui 0 ');
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
         // DocumentProvider
+        LOG.d(' context: ' + context);
+        LOG.d(' uri: ' + uri);
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            LOG.d(' aqui 1 ');
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -350,9 +340,11 @@ public class FilePath extends CordovaPlugin {
 
                 String fullPath = getPathFromExtSD(split);
                 if (fullPath != "") {
+                    LOG.d(' aqui 2 :', fullPath);
                     return fullPath;
                 }
                 else {
+                    LOG.d(' aqui 3 ');
                     return null;
                 }
             }
@@ -375,13 +367,6 @@ public class FilePath extends CordovaPlugin {
                 }
                 //
                 final String id = DocumentsContract.getDocumentId(uri);
-
-                // sometimes in raw type, the second part is a valid filepath
-                final String rawFilepath = getRawFilepath(id);
-                if (rawFilepath != "") {
-                    return rawFilepath;
-                }
-
                 String[] contentUriPrefixesToTry = new String[]{
                         "content://downloads/public_downloads",
                         "content://downloads/my_downloads"
@@ -392,6 +377,7 @@ public class FilePath extends CordovaPlugin {
                     try {
                         String path = getDataColumn(context, contentUri, null, null);
                         if (path != null) {
+                            LOG.d(' aqui 4 :', path);
                             return path;
                         }
                     } catch (Exception e) {
@@ -441,6 +427,7 @@ public class FilePath extends CordovaPlugin {
                     return getDriveFilePath(uri, context);
                 } else {
                     String contentPath = getContentFromSegments(uri.getPathSegments());
+                    LOG.d(' CONTENT PATH : ' + contentPath);
                     if (contentPath != "") {
                         return getPath(context, Uri.parse(contentPath));
                     } else {
@@ -464,6 +451,7 @@ public class FilePath extends CordovaPlugin {
     }
 
     private static String getDriveFilePath(Uri uri, Context context) {
+        LOG.d(' aqui 5 ');
         Uri returnUri = uri;
         Cursor returnCursor = context.getContentResolver().query(returnUri, null, null, null, null);
         /*
